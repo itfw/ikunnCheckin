@@ -1,3 +1,4 @@
+fork from https://github.com/xygodcyx/ikunnCheckin
 # 怎么使用 ikunnCheckin
 
 ## 1.fork此项目
