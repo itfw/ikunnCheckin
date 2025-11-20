@@ -2,7 +2,7 @@ name: Update Subscription
 
 on:
   schedule:
-    - cron: '0/30 23-10 * * *'  # UTC 时间
+    - cron: '1 23-10 * * *'  # UTC 时间
   workflow_dispatch:
 
 jobs:
