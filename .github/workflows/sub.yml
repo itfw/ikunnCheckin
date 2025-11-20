@@ -1,0 +1,38 @@
+name: Update Subscription
+
+on:
+  schedule:
+    - cron: '0 0-9 * * 1-5'  # UTC 时间
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run  script
+        env:
+            API_PATH: ${{ secrets.API_PATH }}
+            API1_PATH: ${{ secrets.API1_PATH }}
+        run: |
+          node getsub.js
+          node livesub.js
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add sub.txt live
+          if ! git diff --cached --quiet; then
+            git commit -m "Update $(date '+%Y-%m-%d %H:%M')"
+            git push
+          else
+            echo "No changes, skip commit"
+          fi
